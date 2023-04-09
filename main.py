@@ -1,3 +1,9 @@
+"""
+Author: [Heo Hyun Jun]
+Description: Main function to fetch and send relevant news articles to Slack
+Creation Date: 2023-04-09
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import urllib3
@@ -6,7 +12,9 @@ from slack_bot import SlackBot
 import os
 
 def main():
+    # Disable SSL warnings
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    
     main_url = 'https://www.boannews.com'
     url = 'https://www.boannews.com/media/t_list.asp'
     response = requests.get(url, verify=False)
@@ -23,6 +31,7 @@ def main():
 
     news_found = False
 
+    # Iterate over news items and check if it's within the specified time range
     for news_item in news_items:
         is_today_news = False
         if 'news_list' in news_item['class']:
@@ -44,6 +53,7 @@ def main():
             else:
                 print("오늘 아님")
 
+    # If no news is found, send a message to the Slack channel
     if not news_found:
         slack_bot.send_message_to_slack_channel(SLACK_CHANNEL_ID, "뉴스가 없습니다.")
 
