@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import urllib3
 from utils import extract_href_and_text, get_date_about_news, is_within_time_range
 from slack_bot import SlackBot
+import os
 
 def main():
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
