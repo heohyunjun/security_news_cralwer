@@ -18,6 +18,7 @@ def main():
     # Initialize SlackBot instance
     SLACK_BOT_TOKEN = os.environ.get("SLACK_BOT_TOKEN")
     SLACK_CHANNEL_ID = os.environ.get("SLACK_CHANNEL_ID")
+    
     slack_bot = SlackBot(SLACK_BOT_TOKEN)
 
     news_found = False
