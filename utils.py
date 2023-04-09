@@ -46,8 +46,9 @@ def is_time_between(target, start, end):
 
 def is_within_time_range(date_info):
     # Set the current_datetime to April 8, 2023, 04:50 for testing
-    current_datetime = datetime.datetime(2023, 4, 8, 14, 50)
-    # current_datetime = datetime.datetime.now()
+    # current_datetime = datetime.datetime(2023, 4, 8, 14, 50)
+    
+    current_datetime = datetime.datetime.now()
     current_time = current_datetime.time()
 
     start_range_1 = datetime.time(4, 0)
