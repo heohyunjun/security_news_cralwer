@@ -25,7 +25,13 @@ def main():
     for news_item in news_items:
         is_today_news = False
         if 'news_list' in news_item['class']:
-            # ... 이전 코드 ...
+            span_tag = news_item.find('span', {'class': 'news_writer'})
+            news_date = get_date_about_news(span_tag.text)
+            
+            if news_date:
+                print(f"Span text: {news_date}")
+            else:
+                print("No span tag found")
 
             is_today_news = is_within_time_range(news_date)
             href, text = extract_href_and_text(news_item)
