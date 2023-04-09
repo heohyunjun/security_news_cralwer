@@ -13,10 +13,11 @@
 
     ├── main.py
     ├── slack_bot.py
+    ├── utils.py
     ├── requirements.txt
     ├── .github
     │ └── workflows
-    │ └── run_slack_bot.yml
+    │   └── main.yml
     └── README.md
 
 ## 설치 및 실행
