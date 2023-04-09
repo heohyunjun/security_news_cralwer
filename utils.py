@@ -1,34 +1,35 @@
+"""
+Author: [Heo Hyun Jun]
+Description: A script to send a list of recent news articles to a specified Slack channel, based on the given time range.
+Creation Date: 2023-04-09
+"""
+
+
 import re
 import datetime
 
-def send_message_to_slack_channel(channel, text):
-    try:
-        app.client.chat_postMessage(
-            channel=channel,
-            text=text
-        )
-    except Exception as e:
-        print(f"Error sending message to Slack: {e}")
-        
-def extract_href_and_text(news_item):
+from bs4.element import Tag
+from typing import Optional, Tuple
+
+
+def extract_href_and_text(news_item: Tag) -> Tuple[Optional[str], Optional[str]]:
     link = None
-    text = None
+    title = None
 
     a_tag = news_item.select_one('a')
     if a_tag:
         link = a_tag['href']
-        text = a_tag.text.strip()
+        title = a_tag.text.strip()
 
-    return link, text
+    return link, title
 
 
-def get_date_about_news(date_element):
+def extract_date_from_element(date_element: str) -> Optional[str]:
     if date_element:
         date_pattern = r"(\d{4})년 (\d{2})월 (\d{2})일 (\d{2}:\d{2})"
         match = re.search(date_pattern, date_element)
         
         if match:
-            # Extract and return the date
             date_str = match.group()
             return date_str
         else:
@@ -38,16 +39,14 @@ def get_date_about_news(date_element):
         print("Date element not found")
         return None
 
-def is_time_between(target, start, end):
+def is_time_between(target: datetime.time, start: datetime.time, end: datetime.time) -> bool:
     if start <= end:
         return start <= target <= end
     else:
         return start <= target or target <= end
 
-def is_within_time_range(date_info):
-    # Set the current_datetime to April 8, 2023, 04:50 for testing
-    # current_datetime = datetime.datetime(2023, 4, 8, 14, 50)
-    
+
+def is_within_specified_time_range(date_info: str) -> bool:
     current_datetime = datetime.datetime.now()
     current_time = current_datetime.time()
 
@@ -61,7 +60,6 @@ def is_within_time_range(date_info):
 
     if is_time_between(current_time, start_range_1, end_range_1):
         previous_day_end_range = current_datetime - datetime.timedelta(days=1)
-        previous_day_end_range_time = previous_day_end_range.time()
 
         if date_time_obj.date() == previous_day_end_range.date() and is_time_between(target_time, datetime.time(15, 0), datetime.time(23, 59, 59)):
             return True

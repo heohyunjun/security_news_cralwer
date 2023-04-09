@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import urllib3
-from utils import extract_href_and_text, get_date_about_news, is_within_time_range
+from utils import extract_href_and_text, extract_date_from_element, is_within_specified_time_range
 from slack_bot import SlackBot
 import os
 
@@ -27,14 +27,14 @@ def main():
         is_today_news = False
         if 'news_list' in news_item['class']:
             span_tag = news_item.find('span', {'class': 'news_writer'})
-            news_date = get_date_about_news(span_tag.text)
+            news_date = extract_date_from_element(span_tag.text)
 
             if news_date:
                 print(f"Span text: {news_date}")
             else:
                 print("No span tag found")
 
-            is_today_news = is_within_time_range(news_date)
+            is_today_news = is_within_specified_time_range(news_date)
             href, text = extract_href_and_text(news_item)
             if is_today_news:
                 news_found = True
