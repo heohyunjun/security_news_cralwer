@@ -1,14 +1,8 @@
 name: News Bot
 
-# on:
-#   schedule:
-#     - cron: "50 5,19 * * *" # Run daily at 4:50AM and 2:50PM KST (UTC+9)
-
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  schedule:
+    - cron: "45 5,19 * * *" # Run daily at 4:50AM and 2:50PM KST (UTC+9)
 
 jobs:
   run-news-bot:
