@@ -1,14 +1,14 @@
-name: Python CI
+name: News Bot
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: '50 5,19 * * *' # Run daily at 4:50AM and 2:50PM KST (UTC+9)
 
 jobs:
   run-news-bot:
     runs-on: ubuntu-latest
+    env:
+      TZ: 'Asia/Seoul'
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
