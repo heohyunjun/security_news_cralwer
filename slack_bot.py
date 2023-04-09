@@ -1,7 +1,5 @@
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-import os
-from config import SLACK_BOT_TOKEN
 
 class SlackBot:
     def __init__(self, token):
